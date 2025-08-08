@@ -4,9 +4,9 @@ This is a simple command-line tool to download music from various websites (like
 
 ## Features
 
--   **Command-Line Interface:** A simple script to download songs directly from your terminal.
+-   **Batch Downloading:** Provide a text file with a list of URLs to download multiple songs at once.
+-   **Automatic Naming:** The script automatically uses the video title as the filename for each song.
 -   **High-Quality Downloads:** Downloads audio in FLAC format to preserve the best sound quality.
--   **Easy to Use:** Just provide a URL and a name.
 
 ## How to Use
 
@@ -35,21 +35,18 @@ Before you start, you need to have two things installed on your computer:
 
 ### Running the Tool
 
-1.  **Run the script from your terminal:**
-    ```bash
-    python downloader.py "<URL>" "<SONG_NAME>"
+1.  **Create a text file** (e.g., `my_songs.txt`) and add the URLs of the songs you want to download, with one URL per line. For example:
+    ```
+    https://www.youtube.com/watch?v=dQw4w9WgXcQ
+    https://www.youtube.com/watch?v=y6120QOlsfU
     ```
 
-2.  **Replace the placeholders:**
-    -   `<URL>`: The full URL of the song you want to download (e.g., from YouTube). Make sure to wrap it in quotes.
-    -   `<SONG_NAME>`: The name you want to give the downloaded file (without the extension). If the name has spaces, wrap it in quotes.
-
-3.  **Example:**
+2.  **Run the script from your terminal**, providing the path to your text file:
     ```bash
-    python downloader.py "https://www.youtube.com/watch?v=y6120QOlsfU" "My Test Song"
+    python downloader.py my_songs.txt
     ```
 
-4.  The song will be downloaded into a folder named `downloads`.
+3.  The script will read each URL from the file, download the song, and save it using the video's title as the filename. All songs will be placed in a folder named `downloads`.
 
 ---
 
