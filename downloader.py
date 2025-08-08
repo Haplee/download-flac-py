@@ -1,5 +1,6 @@
 import yt_dlp
 import os
+import argparse
 
 def download_song(url, song_name):
     """
@@ -14,7 +15,7 @@ def download_song(url, song_name):
         os.makedirs(output_dir)
 
     ydl_opts = {
-        'format': 'bestaudio/best',
+        'format': 'bestaudio',
         'postprocessors': [{
             'key': 'FFmpegExtractAudio',
             'preferredcodec': 'flac',
@@ -23,20 +24,32 @@ def download_song(url, song_name):
         'outtmpl': os.path.join(output_dir, f'{song_name}.%(ext)s'),
         'noplaylist': True,
         'http_headers': {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36'
         }
     }
 
     try:
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
             ydl.download([url])
-        return f"Song '{song_name}' downloaded successfully as FLAC."
+        return f"Success: Song '{song_name}' downloaded to the 'downloads' folder."
     except Exception as e:
-        return f"Error downloading song: {e}"
+        return f"Error: {e}"
 
 if __name__ == '__main__':
-    # Example usage:
-    # A different test video to avoid potential blocks.
-    test_url = "https://www.youtube.com/watch?v=y6120QOlsfU"
-    test_song_name = "Test-Song"
-    print(download_song(test_url, test_song_name))
+    parser = argparse.ArgumentParser(
+        description="Downloads a song from a URL (like YouTube) and saves it as a FLAC file.",
+        epilog="Example: python downloader.py 'https://www.youtube.com/watch?v=dQw4w9WgXcQ' 'My-Favorite-Song'"
+    )
+    parser.add_argument(
+        "url",
+        help="The URL of the song to download."
+    )
+    parser.add_argument(
+        "song_name",
+        help="The name to save the song file as (without extension)."
+    )
+
+    args = parser.parse_args()
+
+    result = download_song(args.url, args.song_name)
+    print(result)
